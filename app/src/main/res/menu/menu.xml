@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/salir"
+        android:title="salir"
+        android:visible="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/salir"/>
+    <item
+        android:id="@+id/perfil"
+        android:title="perfil"
+        android:visible="true"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/perfil"/>
+</menu>
