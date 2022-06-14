@@ -1,6 +1,7 @@
 package com.cristian.rojas
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +14,11 @@ class perfil : AppCompatActivity() {
         vinculo = ActivityPerfilBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(vinculo.root)
+        vinculo.gitb.setOnClickListener{
+            var direction = "https://github.com/rojas05";
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(direction))
+            startActivity(browserIntent)
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
@@ -20,6 +26,7 @@ class perfil : AppCompatActivity() {
     }
     fun cerrarcion() {
         startActivity(Intent(this,MainActivity::class.java))
+        finish()
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){

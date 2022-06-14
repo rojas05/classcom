@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 @Dao
 interface computadorDao {
-        @Query("SELECT * FROM computadores")
+        @Query("SELECT * FROM computadores" )
         suspend fun listar(): List<computadores>
         @Insert
         suspend fun insertar(vararg computador: computadores)

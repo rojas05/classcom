@@ -13,5 +13,6 @@ data class computadores (
     @PrimaryKey val codigo: Int?,
     @ColumnInfo(name = "modelo") val modelo: String?,
     @ColumnInfo(name = "marca") val marca: String?,
-    @ColumnInfo(name = "categoria") val categoria: Int?
+    @ColumnInfo(name = "categoria") val categoria: Int?,
+    @ColumnInfo(name = "fecha") val fecha: String?
         )

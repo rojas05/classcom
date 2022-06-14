@@ -31,8 +31,16 @@ class busqueda : AppCompatActivity(), View.OnClickListener {
           val intent =  Intent(this,categorias::class.java)
             startActivity(intent)
         }
+        vinculo.etdate.setOnClickListener{showDatepickerDialogo()}
     }
 
+    private fun showDatepickerDialogo() {
+        val datePicker = fecha{dia, mes, an -> onDateSelecter(dia, mes, an) }
+        datePicker.show(supportFragmentManager, "datePiker")
+    }
+    fun onDateSelecter(dia:Int ,mes:Int ,an:Int){
+        vinculo.etdate.setText("$dia/$mes/$an")
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
         return true
@@ -70,23 +78,27 @@ class busqueda : AppCompatActivity(), View.OnClickListener {
                 var marc: String? = null
                 var codi: Int? = null
                 var mode: String? = null
+                var fecha: String? = null
                 if (TextUtils.isEmpty(vinculo.modelo.text.toString()) && TextUtils.isEmpty(vinculo.marca.text.toString())
-                    && TextUtils.isEmpty(vinculo.codigo.text.toString()) && TextUtils.isEmpty(vinculo.categoria.text.toString())) {
+                    && TextUtils.isEmpty(vinculo.codigo.text.toString()) && TextUtils.isEmpty(vinculo.categoria.text.toString()) && TextUtils.isEmpty(vinculo.etdate.text.toString())) {
                     vinculo.modelo.error = "ingrese un modelo"
                     vinculo.marca.error = "ingrese una marca"
                     vinculo.categoria.error = "ingrese el id de una categoria"
                     vinculo.codigo.error = "ingrese el codigo"
+                    vinculo.etdate.error = "ingrese una fecha"
                     vinculo.modelo.requestFocus()
                     vinculo.marca.requestFocus()
                     vinculo.codigo.requestFocus()
                     vinculo.categoria.requestFocus()
+                    vinculo.etdate.requestFocus()
                 } else {
                     cate = vinculo.categoria.text.toString().toInt()
                     marc = vinculo.marca.text.toString()
                     codi = vinculo.codigo.text.toString().toInt()
                     mode = vinculo.modelo.text.toString()
+                    fecha = vinculo.etdate.text.toString()
                     mostrarinfo("computadores", "computador agregado exitosamente")
-                    val computerInfo = computadores(codi,mode,marc,cate)
+                    val computerInfo = computadores(codi,mode,marc,cate,fecha)
                     GlobalScope.launch {
                         classcom.getInstancia(this@busqueda).daocomputer().insertar(computerInfo)
                     }
@@ -101,6 +113,7 @@ class busqueda : AppCompatActivity(), View.OnClickListener {
                 var marc: String? = null
                 var mode: String? = null
                 vinculo.codigo.text = null
+                vinculo.etdate.text = null
                 if (TextUtils.isEmpty(vinculo.modelo.text.toString()) && TextUtils.isEmpty(vinculo.marca.text.toString())
                    && TextUtils.isEmpty(vinculo.categoria.text.toString())) {
                     vinculo.modelo.error = "ingrese un modelo"
@@ -155,7 +168,7 @@ class busqueda : AppCompatActivity(), View.OnClickListener {
                     launch(Dispatchers.Main){
                         alluser.forEach{
                             userData.append( "-->" + "CODIGO " + it.codigo + " MODELO " +it.modelo +"\n"
-                                   + " MARCA " +it.marca  + " CATEGOTIA "+it.categoria +"\n"+"\n")
+                                   + " MARCA " +it.marca  + " CATEGOTIA "+it.categoria + " FECHA "+ it.fecha+"\n"+"\n")
                         }
                         mostrar(userData.toString())
                     }
